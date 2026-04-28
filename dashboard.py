@@ -68,7 +68,7 @@ st.markdown("""
     .section-title {
         font-family: 'DM Serif Display', serif;
         font-size: 1.5rem;
-        color: #1a1a1a !important;
+        color: #ffffff !important;
         border-bottom: 2px solid #c8773a;
         padding-bottom: 0.5rem;
         margin-bottom: 1.5rem;
@@ -85,7 +85,7 @@ def load_data():
         df['customer_state'] = df['customer_state'].str.strip().str.upper()
         return df
     except FileNotFoundError:
-        st.error("❌ File tidak ditemukan!")
+        st.error(" File tidak ditemukan!")
         st.stop()
 
 customers_df = load_data()
@@ -151,7 +151,7 @@ st.pyplot(fig1)
 
 st.markdown("""
 <div class="insight-box">
-    <h4>📌 Insight</h4>
+    <h4> Insight</h4>
     <ul>
         <li>State <b>SP (São Paulo)</b> mendominasi dengan 41.746 customer, jauh melampaui state lainnya.</li>
         <li>Hanya <b>4 state</b> yang berada di atas rata-rata (3.683): SP, RJ, MG, dan RS.</li>
@@ -179,7 +179,7 @@ st.pyplot(fig2)
 
 st.markdown("""
 <div class="insight-box">
-    <h4>📌 Insight</h4>
+    <h4> Insight</h4>
     <ul>
         <li><b>Rio de Janeiro</b> menjadi kota paling potensial di luar São Paulo dengan 6.882 customer.</li>
         <li><b>Belo Horizonte</b> (2.773) dan <b>Brasilia</b> (2.131) berada di posisi kedua dan ketiga.</li>
@@ -198,7 +198,7 @@ col_c, col_r = st.columns(2)
 with col_c:
     st.markdown("""
     <div class="insight-box">
-        <h4>✅ Conclusion</h4>
+        <h4> Conclusion</h4>
         <ul>
             <li><b>Pertanyaan 1:</b> SP mendominasi dengan 42% total customer. Hanya 4 state di atas rata-rata, sementara 23 state lainnya masih jauh di bawah rata-rata.</li>
             <li><b>Pertanyaan 2:</b> Rio de Janeiro adalah kota paling potensial di luar SP, diikuti Belo Horizonte dan Brasilia. Mayoritas kota masih dalam kategori Low Potential.</li>
@@ -209,7 +209,7 @@ with col_c:
 with col_r:
     st.markdown("""
     <div class="insight-box">
-        <h4>🚀 Rekomendasi Action Item</h4>
+        <h4> Rekomendasi Action Item</h4>
         <ul>
             <li>Fokuskan 40% anggaran marketing di state SP, RJ, dan MG sebagai wilayah dengan customer terbesar.</li>
             <li>Jadikan <b>Rio de Janeiro</b> sebagai prioritas ekspansi pertama dengan layanan same-day delivery.</li>
@@ -218,6 +218,3 @@ with col_r:
         </ul>
     </div>
     """, unsafe_allow_html=True)
-
-st.markdown("<br><br>")
-st.markdown("<center><small>© 2026 Olist Customer Analysis Dashboard</small></center>", unsafe_allow_html=True)
