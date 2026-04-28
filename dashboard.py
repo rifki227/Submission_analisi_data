@@ -93,7 +93,7 @@ if customers_df is None:
     st.stop()
 
 # ── Header ────────────────────────────────────────────────────────────────────
-st.markdown("# 📦  Customer Analysis Dashboard")
+st.markdown("#   Customer Analysis Dashboard")
 st.markdown("Analisis distribusi customer berdasarkan wilayah di Brasil — dataset Olist E-Commerce.")
 st.markdown("---")
 
