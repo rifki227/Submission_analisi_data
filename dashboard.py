@@ -52,7 +52,7 @@ st.markdown("""
         margin-top: 1rem;
     }
     .insight-box h4 {
-        color: #c8773a;
+        color: #1a1a1a;
         margin-top: 0;
         font-family: 'DM Serif Display', serif;
     }
