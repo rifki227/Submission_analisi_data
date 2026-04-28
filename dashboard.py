@@ -70,10 +70,19 @@ st.markdown("""
 # ── Load Data ─────────────────────────────────────────────────────────────────
 @st.cache_data
 def load_data():
-    df = pd.read_csv('olist_customers_dataset.csv')
-    df['customer_city'] = df['customer_city'].str.strip().str.title()
-    df['customer_state'] = df['customer_state'].str.strip().str.upper()
-    return df
+    try:
+        df = pd.read_csv('olist_customers_dataset.csv')
+        df['customer_city'] = df['customer_city'].str.strip().str.title()
+        df['customer_state'] = df['customer_state'].str.strip().str.upper()
+        return df
+    except FileNotFoundError:
+        st.error("❌ File tidak ditemukan!")
+        st.stop()
+
+customers_df = load_data()
+
+if customers_df is None:
+    st.stop()
 
 # ── Header ────────────────────────────────────────────────────────────────────
 st.markdown("# 📦 Olist Customer Analysis Dashboard")
