@@ -71,7 +71,7 @@ st.markdown("""
 @st.cache_data
 def load_data():
     try:
-        df = pd.read_csv('olist_customers_dataset.csv')
+        df = pd.read_csv('customers_dataset.csv')
         df['customer_city'] = df['customer_city'].str.strip().str.title()
         df['customer_state'] = df['customer_state'].str.strip().str.upper()
         return df
