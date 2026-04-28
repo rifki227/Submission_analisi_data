@@ -7,7 +7,6 @@ import os
 # ── Page config ──────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="Customer Analysis",
-    page_icon="📦",
     layout="wide",
 )
 
