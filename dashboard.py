@@ -6,7 +6,7 @@ import os
 
 # ── Page config ──────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="Olist Customer Analysis",
+    page_title="Customer Analysis",
     page_icon="📦",
     layout="wide",
 )
@@ -32,7 +32,7 @@ st.markdown("""
     .metric-card h3 {
         margin: 0 0 0.25rem 0;
         font-size: 0.85rem;
-        color: #888;
+        color: #888 !important;
         font-family: 'DM Sans', sans-serif;
         font-weight: 500;
         text-transform: uppercase;
@@ -42,7 +42,7 @@ st.markdown("""
         margin: 0;
         font-size: 1.8rem;
         font-weight: 700;
-        color: #1a1a1a;
+        color: #1a1a1a !important;
     }
     .insight-box {
         background: #fdf6ee;
@@ -52,14 +52,23 @@ st.markdown("""
         margin-top: 1rem;
     }
     .insight-box h4 {
-        color: black;
+        color: #c8773a !important;
         margin-top: 0;
         font-family: 'DM Serif Display', serif;
+    }
+    .insight-box ul li {
+        color: #1a1a1a !important;
+    }
+    .insight-box ul li b {
+        color: #1a1a1a !important;
+    }
+    .insight-box p {
+        color: #1a1a1a !important;
     }
     .section-title {
         font-family: 'DM Serif Display', serif;
         font-size: 1.5rem;
-        color: #1a1a1a;
+        color: #1a1a1a !important;
         border-bottom: 2px solid #c8773a;
         padding-bottom: 0.5rem;
         margin-bottom: 1.5rem;
@@ -85,7 +94,7 @@ if customers_df is None:
     st.stop()
 
 # ── Header ────────────────────────────────────────────────────────────────────
-st.markdown("# 📦 Olist Customer Analysis Dashboard")
+st.markdown("# 📦  Customer Analysis Dashboard")
 st.markdown("Analisis distribusi customer berdasarkan wilayah di Brasil — dataset Olist E-Commerce.")
 st.markdown("---")
 
