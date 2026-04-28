@@ -70,12 +70,22 @@ st.markdown("""
 # ── Load Data ─────────────────────────────────────────────────────────────────
 @st.cache_data
 def load_data():
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    data_path = os.path.join(base_dir, '..', 'data', 'olist_customers_dataset.csv')
-    df = pd.read_csv(data_path)
-    df['customer_city'] = df['customer_city'].str.strip().str.title()
-    df['customer_state'] = df['customer_state'].str.strip().str.upper()
-    return df
+    # coba beberapa kemungkinan path
+    possible_paths = [
+        'data/olist_customers_dataset.csv',
+        '../data/olist_customers_dataset.csv',
+        'olist_customers_dataset.csv',
+    ]
+    
+    for path in possible_paths:
+        if os.path.exists(path):
+            df = pd.read_csv(path)
+            df['customer_city'] = df['customer_city'].str.strip().str.title()
+            df['customer_state'] = df['customer_state'].str.strip().str.upper()
+            return df
+    
+    st.error("❌ File dataset tidak ditemukan! Pastikan file olist_customers_dataset.csv ada di folder data/")
+    st.stop()
 
 customers_df = load_data()
 
