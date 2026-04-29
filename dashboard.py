@@ -260,7 +260,6 @@ with st.sidebar:
     top_n = st.slider("Top N Kota ditampilkan:", 5, 20, 10, 1)
 
     st.markdown("---")
-    st.markdown("<small style='color:#9ca3af'>customers_dataset © 2016-2018</small>", unsafe_allow_html=True)
 
 # ── Apply Filter ──────────────────────────────────────────────────────────────
 filtered_df = customers_df[customers_df['customer_state'].isin(selected_states)]
@@ -458,8 +457,3 @@ with col_r:
     </div>
     """, unsafe_allow_html=True)
 
-st.markdown("""
-<div class="footer">
-    © 2026 Customer Analysis Dashboard — customers_dataset Olist periode 2016-2018
-</div>
-""", unsafe_allow_html=True)
