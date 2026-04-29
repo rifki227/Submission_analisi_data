@@ -174,24 +174,16 @@ st.markdown("""
         box-shadow: 0 2px 12px rgba(0,0,0,0.06);
     }
 
-    /* Sidebar */
-    section[data-testid="stSidebar"] {
-        background: white;
-        border-right: 1px solid #e5e7eb;
-    }
-    section[data-testid="stSidebar"] .stMarkdown h2 {
+   section[data-testid="stSidebar"] .stMarkdown h2 {
         color: #111827 !important;
         font-size: 1rem;
     }
-    section[data-testid="stSidebar"] {
-        background: white;
-        border-right: 1px solid #e5e7eb;
-    }
-    section[data-testid="stSidebar"] .stMarkdown h2 {
+    section[data-testid="stSidebar"] * {
         color: #111827 !important;
-        font-size: 1rem;
     }
-
+    section[data-testid="stSidebar"] small {
+        color: #6b7280 !important;
+    }
     /* Footer */
     .footer {
         text-align: center;
