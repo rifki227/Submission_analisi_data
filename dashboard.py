@@ -7,7 +7,6 @@ import numpy as np
 # ── Page config ───────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="Customer Analysis Dashboard",
-    page_icon="📦",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -184,6 +183,14 @@ st.markdown("""
         color: #111827 !important;
         font-size: 1rem;
     }
+    section[data-testid="stSidebar"] {
+        background: white;
+        border-right: 1px solid #e5e7eb;
+    }
+    section[data-testid="stSidebar"] .stMarkdown h2 {
+        color: #111827 !important;
+        font-size: 1rem;
+    }
 
     /* Footer */
     .footer {
@@ -208,7 +215,7 @@ def load_data():
         df['customer_state'] = df['customer_state'].str.strip().str.upper()
         return df
     except FileNotFoundError:
-        st.error("❌ File customers_dataset.csv tidak ditemukan!")
+        st.error(" File customers_dataset.csv tidak ditemukan!")
         st.stop()
 
 customers_df = load_data()
@@ -217,11 +224,11 @@ if customers_df is None:
 
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("## 🎛️ Filter & Pencarian")
+    st.markdown("##  Filter & Pencarian")
     st.markdown("---")
 
     # Filter State
-    st.markdown("**📍 Filter by State**")
+    st.markdown("** Filter by State**")
     all_states = sorted(customers_df['customer_state'].unique())
     selected_states = st.multiselect(
         "Pilih State:",
@@ -233,7 +240,7 @@ with st.sidebar:
     st.markdown("---")
 
     # Filter Kota
-    st.markdown("**🏙️ Filter by Kota**")
+    st.markdown("** Filter by Kota**")
     available_cities = sorted(
         customers_df[customers_df['customer_state'].isin(selected_states)]['customer_city'].unique()
     )
@@ -247,7 +254,7 @@ with st.sidebar:
     st.markdown("---")
 
     # Search Customer
-    st.markdown("**🔍 Search Customer**")
+    st.markdown("** Search Customer**")
     search_query = st.text_input(
         "Cari Customer ID:",
         placeholder="Masukkan customer_id...",
@@ -257,7 +264,7 @@ with st.sidebar:
     st.markdown("---")
 
     # Slider Top N
-    st.markdown("**📊 Pengaturan Grafik**")
+    st.markdown("** Pengaturan Grafik**")
     top_n = st.slider("Top N Kota ditampilkan:", 5, 20, 10, 1)
 
     st.markdown("---")
@@ -271,7 +278,7 @@ if selected_cities:
 # ── Header ────────────────────────────────────────────────────────────────────
 st.markdown("""
 <div class="main-header">
-    <h1>📦 Customer Analysis Dashboard</h1>
+    <h1> Customer Analysis Dashboard</h1>
     <p>Analisis distribusi customer berdasarkan wilayah di Brasil — customers_dataset periode 2016-2018</p>
 </div>
 """, unsafe_allow_html=True)
@@ -370,7 +377,7 @@ st.pyplot(fig1)
 
 st.markdown("""
 <div class="insight-box">
-    <h4>📌 Insight Pertanyaan 1</h4>
+    <h4> Insight Pertanyaan 1</h4>
     <ul>
         <li>State <b>SP (São Paulo)</b> mendominasi dengan 41.746 customer, jauh melampaui state lainnya.</li>
         <li>Hanya <b>4 state</b> yang berada di atas rata-rata: SP, RJ, MG, dan RS.</li>
@@ -432,13 +439,13 @@ st.markdown("""
 st.markdown("<br>", unsafe_allow_html=True)
 
 # ── Conclusion & Recommendation ───────────────────────────────────────────────
-st.markdown("### ✅ Conclusion & 🚀 Rekomendasi")
+st.markdown("###  Conclusion &  Rekomendasi")
 col_c, col_r = st.columns(2)
 
 with col_c:
     st.markdown("""
     <div class="conclusion-box">
-        <h4 style="color:#667eea;">✅ Conclusion</h4>
+        <h4 style="color:#667eea;"> Conclusion</h4>
         <ul>
             <li><b>Pertanyaan 1:</b> Berdasarkan customers_dataset periode 2016-2018, SP mendominasi dengan 42% total customer. Hanya 4 state di atas rata-rata, sementara 23 state lainnya masih jauh di bawah rata-rata.</li>
             <li><b>Pertanyaan 2:</b> Berdasarkan customers_dataset periode 2016-2018, Rio de Janeiro adalah kota paling potensial di luar SP, diikuti Belo Horizonte dan Brasilia. Mayoritas kota masih dalam kategori Low Potential.</li>
@@ -449,7 +456,7 @@ with col_c:
 with col_r:
     st.markdown("""
     <div class="conclusion-box">
-        <h4 style="color:#764ba2;">🚀 Rekomendasi Action Item</h4>
+        <h4 style="color:#764ba2;"> Rekomendasi Action Item</h4>
         <ul>
             <li>Fokuskan 40% anggaran marketing di state <b>SP, RJ, dan MG</b> sebagai wilayah dengan customer terbesar.</li>
             <li>Jadikan <b>Rio de Janeiro</b> sebagai prioritas ekspansi pertama dengan layanan same-day delivery.</li>
