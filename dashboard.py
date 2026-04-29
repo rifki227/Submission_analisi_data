@@ -174,15 +174,15 @@ st.markdown("""
         box-shadow: 0 2px 12px rgba(0,0,0,0.06);
     }
 
-   section[data-testid="stSidebar"] .stMarkdown h2 {
-        color: #111827 !important;
-        font-size: 1rem;
+   section[data-testid="stSidebar"] {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-right: none;
     }
     section[data-testid="stSidebar"] * {
-        color: #111827 !important;
+        color: #ffffff !important;
     }
     section[data-testid="stSidebar"] small {
-        color: #6b7280 !important;
+        color: rgba(255,255,255,0.7) !important;
     }
     /* Footer */
     .footer {
