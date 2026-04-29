@@ -1,12 +1,12 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
 import os
 
-# ── Page config ──────────────────────────────────────────────────────────────
+# ── Page config ───────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="Customer Analysis",
+    page_title="Customer Analysis Dashboard",
+    page_icon="📦",
     layout="wide",
 )
 
@@ -84,7 +84,7 @@ def load_data():
         df['customer_state'] = df['customer_state'].str.strip().str.upper()
         return df
     except FileNotFoundError:
-        st.error(" File tidak ditemukan!")
+        st.error("❌ File tidak ditemukan!")
         st.stop()
 
 customers_df = load_data()
@@ -93,9 +93,32 @@ if customers_df is None:
     st.stop()
 
 # ── Header ────────────────────────────────────────────────────────────────────
-st.markdown("#   Customer Analysis Dashboard")
-st.markdown("Analisis distribusi customer berdasarkan wilayah di Brasil — dataset Olist E-Commerce.")
+st.markdown("# 📦 Customer Analysis Dashboard")
+st.markdown("Analisis distribusi customer berdasarkan wilayah di Brasil — customers_dataset periode 2016-2018.")
 st.markdown("---")
+
+# ── Sidebar Filter ────────────────────────────────────────────────────────────
+st.sidebar.header("🔽 Filter Data")
+
+# Filter State
+all_states = sorted(customers_df['customer_state'].unique())
+selected_states = st.sidebar.multiselect(
+    "Pilih State:",
+    options=all_states,
+    default=all_states
+)
+
+# Filter Top N Kota
+top_n = st.sidebar.slider(
+    "Tampilkan Top N Kota:",
+    min_value=5,
+    max_value=20,
+    value=10,
+    step=1
+)
+
+# Apply Filter
+filtered_df = customers_df[customers_df['customer_state'].isin(selected_states)]
 
 # ── Metrics ───────────────────────────────────────────────────────────────────
 col1, col2, col3, col4 = st.columns(4)
@@ -104,38 +127,38 @@ with col1:
     st.markdown(f"""
     <div class="metric-card">
         <h3>Total Customer</h3>
-        <p>{customers_df['customer_id'].nunique():,}</p>
+        <p>{filtered_df['customer_id'].nunique():,}</p>
     </div>""", unsafe_allow_html=True)
 
 with col2:
     st.markdown(f"""
     <div class="metric-card">
         <h3>Total Kota</h3>
-        <p>{customers_df['customer_city'].nunique():,}</p>
+        <p>{filtered_df['customer_city'].nunique():,}</p>
     </div>""", unsafe_allow_html=True)
 
 with col3:
     st.markdown(f"""
     <div class="metric-card">
         <h3>Total State</h3>
-        <p>{customers_df['customer_state'].nunique():,}</p>
+        <p>{filtered_df['customer_state'].nunique():,}</p>
     </div>""", unsafe_allow_html=True)
 
 with col4:
     st.markdown(f"""
     <div class="metric-card">
         <h3>Customer Unik</h3>
-        <p>{customers_df['customer_unique_id'].nunique():,}</p>
+        <p>{filtered_df['customer_unique_id'].nunique():,}</p>
     </div>""", unsafe_allow_html=True)
 
 st.markdown("<br>", unsafe_allow_html=True)
 
 # ── Pertanyaan 1 ──────────────────────────────────────────────────────────────
 st.markdown('<p class="section-title">Pertanyaan 1 — Distribusi Customer per State</p>', unsafe_allow_html=True)
-st.markdown("*State mana yang memiliki jumlah customer terdaftar terbanyak dan bagaimana distribusinya terhadap total keseluruhan customer?*")
+st.markdown("*State mana yang memiliki jumlah customer terdaftar terbanyak dan bagaimana distribusinya terhadap total keseluruhan customer pada customers_dataset periode 2016-2018?*")
 
 fig1, ax1 = plt.subplots(figsize=(14, 5))
-top_state_all = customers_df['customer_state'].value_counts()
+top_state_all = filtered_df['customer_state'].value_counts()
 ax1.bar(top_state_all.index, top_state_all.values, color='#c8773a', alpha=0.85)
 ax1.axhline(y=top_state_all.mean(), color='#1a1a1a', linestyle='--', linewidth=1.5,
             label=f'Rata-rata ({top_state_all.mean():.0f})')
@@ -150,10 +173,10 @@ st.pyplot(fig1)
 
 st.markdown("""
 <div class="insight-box">
-    <h4> Insight</h4>
+    <h4>📌 Insight</h4>
     <ul>
         <li>State <b>SP (São Paulo)</b> mendominasi dengan 41.746 customer, jauh melampaui state lainnya.</li>
-        <li>Hanya <b>4 state</b> yang berada di atas rata-rata (3.683): SP, RJ, MG, dan RS.</li>
+        <li>Hanya <b>4 state</b> yang berada di atas rata-rata: SP, RJ, MG, dan RS.</li>
         <li>State wilayah Utara seperti AC, AP, dan RR memiliki customer paling sedikit — potensi pasar belum tergarap.</li>
     </ul>
 </div>
@@ -163,12 +186,12 @@ st.markdown("<br>", unsafe_allow_html=True)
 
 # ── Pertanyaan 2 ──────────────────────────────────────────────────────────────
 st.markdown('<p class="section-title">Pertanyaan 2 — Potensi Kota di Luar São Paulo</p>', unsafe_allow_html=True)
-st.markdown("*Kota mana di luar São Paulo yang memiliki potensi pertumbuhan customer terbesar?*")
+st.markdown("*Kota mana di luar São Paulo yang memiliki jumlah customer terdaftar terbesar sebagai indikator potensi ekspansi pasar berdasarkan customers_dataset periode 2016-2018?*")
 
 fig2, ax2 = plt.subplots(figsize=(12, 6))
-top_city_no_sp = customers_df[customers_df['customer_city'] != 'Sao Paulo']['customer_city'].value_counts().head(10)
+top_city_no_sp = filtered_df[filtered_df['customer_city'] != 'Sao Paulo']['customer_city'].value_counts().head(top_n)
 ax2.barh(top_city_no_sp.index[::-1], top_city_no_sp.values[::-1], color='#c8773a', alpha=0.85)
-ax2.set_title('Top 10 Kota dengan Customer Terbanyak (Exclude São Paulo)', fontsize=14, fontweight='bold', pad=15)
+ax2.set_title(f'Top {top_n} Kota dengan Customer Terbanyak (Exclude São Paulo)', fontsize=14, fontweight='bold', pad=15)
 ax2.set_xlabel('Jumlah Customer', fontsize=11)
 ax2.set_ylabel('Kota', fontsize=11)
 ax2.spines['top'].set_visible(False)
@@ -178,7 +201,7 @@ st.pyplot(fig2)
 
 st.markdown("""
 <div class="insight-box">
-    <h4> Insight</h4>
+    <h4>📌 Insight</h4>
     <ul>
         <li><b>Rio de Janeiro</b> menjadi kota paling potensial di luar São Paulo dengan 6.882 customer.</li>
         <li><b>Belo Horizonte</b> (2.773) dan <b>Brasilia</b> (2.131) berada di posisi kedua dan ketiga.</li>
@@ -197,10 +220,10 @@ col_c, col_r = st.columns(2)
 with col_c:
     st.markdown("""
     <div class="insight-box">
-        <h4> Conclusion</h4>
+        <h4>✅ Conclusion</h4>
         <ul>
-            <li><b>Pertanyaan 1:</b> SP mendominasi dengan 42% total customer. Hanya 4 state di atas rata-rata, sementara 23 state lainnya masih jauh di bawah rata-rata.</li>
-            <li><b>Pertanyaan 2:</b> Rio de Janeiro adalah kota paling potensial di luar SP, diikuti Belo Horizonte dan Brasilia. Mayoritas kota masih dalam kategori Low Potential.</li>
+            <li><b>Pertanyaan 1:</b> Berdasarkan customers_dataset periode 2016-2018, SP mendominasi dengan 42% total customer. Hanya 4 state di atas rata-rata, sementara 23 state lainnya masih jauh di bawah rata-rata.</li>
+            <li><b>Pertanyaan 2:</b> Berdasarkan customers_dataset periode 2016-2018, Rio de Janeiro adalah kota paling potensial di luar SP, diikuti Belo Horizonte dan Brasilia. Mayoritas kota masih dalam kategori Low Potential.</li>
         </ul>
     </div>
     """, unsafe_allow_html=True)
@@ -208,7 +231,7 @@ with col_c:
 with col_r:
     st.markdown("""
     <div class="insight-box">
-        <h4> Rekomendasi Action Item</h4>
+        <h4>🚀 Rekomendasi Action Item</h4>
         <ul>
             <li>Fokuskan 40% anggaran marketing di state SP, RJ, dan MG sebagai wilayah dengan customer terbesar.</li>
             <li>Jadikan <b>Rio de Janeiro</b> sebagai prioritas ekspansi pertama dengan layanan same-day delivery.</li>
@@ -217,3 +240,6 @@ with col_r:
         </ul>
     </div>
     """, unsafe_allow_html=True)
+
+st.markdown("<br><br>")
+st.markdown("<center><small>© 2026 Customer Analysis Dashboard</small></center>", unsafe_allow_html=True)
